@@ -1,0 +1,5 @@
+package com.codewithtechsagar.blog.entities;
+
+public class User {
+
+}

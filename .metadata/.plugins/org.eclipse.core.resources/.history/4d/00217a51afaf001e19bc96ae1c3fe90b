@@ -1,0 +1,5 @@
+package com.codewithtechsagar.blog.exceptions;
+
+public class ResourceNotFoundException {
+
+}
