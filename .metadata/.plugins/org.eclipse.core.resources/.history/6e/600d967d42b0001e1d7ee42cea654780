@@ -51,7 +51,7 @@ public class UserController {
 		
 		this.userService.deleteUser(uid);
 		//return new ResponseEntity(Map.of("message", "User deleted Successfully"), HttpStatus.OK);
-		return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted Successfully", true), HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted successfully", true), HttpStatus.OK);
 	}
 
 	// GET - Get User
