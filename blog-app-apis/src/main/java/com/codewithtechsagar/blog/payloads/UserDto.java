@@ -3,6 +3,8 @@ package com.codewithtechsagar.blog.payloads;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,19 +16,22 @@ public class UserDto {
 
 	private int id;
 
-	@NotNull
+	//@NotNull
 	@NotEmpty
+	@Size(min = 4, message = "User Name must be minimum of 4 characters !!!")
 	private String name;
 
-	@Email
-	@NotEmpty
+	@Email(message = "Email address is not valid !!!")
 	private String email;
 
-	@NotNull
-	@NotEmpty
+	//@NotNull
+	
+	//@Size(min = 8, max = 14, message = "Password lenghth : 8 -14 & Password Must contain - 2 letters in Upper Case)
+	@NotEmpty	
+	@Pattern(regexp = "^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,14}$", message = "Password lenghth : 8 -14 & Password Must contain - 2 letters in Upper Case, 1  Special Character (!@#$&*), 2 numerals (0-9), 3 letters in Lower Case\"")
 	private String password;
 
-	@NotNull
+	//@NotNull
 	@NotEmpty
 	private String about;
 }
