@@ -14,11 +14,11 @@ public class CategoryDto {
 	
 	private Integer categoryId;
 
-	//@NotBlank
-	//@Size(min = 4)
+	@NotBlank
+	@Size(min = 4, message = "Minimum size of category title is 4.")
 	private String categoryTittle;
 
-	//@NotBlank
-	//@Size(min = 10)
+	@NotBlank
+	@Size(min = 10, message = "Minimum size of category Description is 10.")
 	private String categoryDescription;
 }

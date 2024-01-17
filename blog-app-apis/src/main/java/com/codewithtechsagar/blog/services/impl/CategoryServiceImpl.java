@@ -24,6 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryDto createCategory(CategoryDto categoryDto) {
+		
 		Category cat = this.modelMapper.map(categoryDto, Category.class);
 		Category addedCategory = categoryRepo.save(cat);
 
@@ -60,11 +61,11 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryDto> getCategories() {
 		List<Category> categories = this.categoryRepo.findAll();
-		List<CategoryDto> catDtos = categories.stream().map((cat)-> this.modelMapper.map(categories, CategoryDto.class))
+		List<CategoryDto> catDtos = categories.stream().map((cat) -> this.modelMapper.map(cat, CategoryDto.class))
 				.collect(Collectors.toList());
-		
+
 		return catDtos;
-		
+
 	}
 
 }

@@ -1,0 +1,24 @@
+package com.codewithtechsagar.blog.services;
+
+import java.util.List;
+
+import com.codewithtechsagar.blog.payloads.CategoryDto;
+
+public interface CategoryService {
+	
+	//create
+	CategoryDto createCategory(CategoryDto categoryDto) ;
+	
+	//update
+	CategoryDto updateCategory(CategoryDto categoryDto,Integer categoryId);
+	
+	//delete
+	void deleteCategory(Integer categoryId);
+	
+	//getSingle
+	CategoryDto getCategory(Integer categoryId);
+	
+	//getAll
+	List<CategoryDto> getCategories();
+
+}

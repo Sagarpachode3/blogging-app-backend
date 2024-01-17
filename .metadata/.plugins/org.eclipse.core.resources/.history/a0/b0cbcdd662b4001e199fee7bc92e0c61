@@ -1,0 +1,67 @@
+package com.codewithtechsagar.blog.services.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.codewithtechsagar.blog.entities.Post;
+import com.codewithtechsagar.blog.payloads.PostDto;
+import com.codewithtechsagar.blog.repositories.PostRepo;
+import com.codewithtechsagar.blog.services.PostService;
+
+@Service
+public class PostServiceImpl implements PostService {
+	
+	@Autowired
+	private PostRepo postRepo;
+
+	@Override
+	public Post createPost(PostDto postDto) {
+		
+		return null;
+	}
+
+	@Override
+	public Post updatePost(PostDto postDto, Integer postId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deletePost(Integer postId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Post getPostById(Integer postId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post> getAllPosts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post> getPostsByUser(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post> getPostsByCategory(Integer categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post> searchPosts(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
