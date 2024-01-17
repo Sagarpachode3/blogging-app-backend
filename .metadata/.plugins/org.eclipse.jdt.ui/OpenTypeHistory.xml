@@ -2,5 +2,5 @@
 <typeInfoHistroy>
     <typeInfo handle="=blog-app-apis/C:\/Users\/Pacho\/.m2\/repository\/org\/hibernate\/orm\/hibernate-core\/6.4.1.Final\/hibernate-core-6.4.1.Final.jar=/maven.pomderived=/true=/=/maven.pomderived=/true=/=/maven.groupId=/org.hibernate.orm=/=/maven.artifactId=/hibernate-core=/=/maven.version=/6.4.1.Final=/=/maven.scope=/compile=/&lt;org.hibernate.dialect(MySQL8Dialect.class[MySQL8Dialect" modifiers="1048609" timestamp="1704861008012"/>
     <typeInfo handle="=blog-app-apis/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.codewithtechsagar.blog.services{UserService.java[UserService" modifiers="513" timestamp="1704880891375"/>
-    <typeInfo handle="=blog-app-apis/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.codewithtechsagar.blog.services{PostService.java[PostService" modifiers="513" timestamp="1705403629364"/>
+    <typeInfo handle="=blog-app-apis/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.codewithtechsagar.blog.services{PostService.java[PostService" modifiers="513" timestamp="1705410132127"/>
 </typeInfoHistroy>
