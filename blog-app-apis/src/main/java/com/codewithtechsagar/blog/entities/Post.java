@@ -17,9 +17,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "posts")
-@NoArgsConstructor
+
 @Getter
 @Setter
+@NoArgsConstructor
 public class Post {
 
 	@Id

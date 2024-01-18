@@ -71,7 +71,7 @@ public class PostController {
 		return new ResponseEntity<PostResponse>(allPosts, HttpStatus.OK);
 	}
 
-	// get posts by user
+	// get posts by user	
 
 	@GetMapping("/user/{userId}/posts")
 	ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId) {
@@ -87,5 +87,14 @@ public class PostController {
 		List<PostDto> postsByCategory = this.postService.getPostsByCategory(categoryId);
 
 		return new ResponseEntity<List<PostDto>>(postsByCategory, HttpStatus.OK);
+	}
+	
+	//Search
+	
+	@GetMapping("/posts/search/{keywords}")
+	ResponseEntity<List<PostDto>> searchPostByTitle(
+			@PathVariable("keywords") String keywords){
+		List<PostDto> result = this.postService.searchPosts(keywords);
+		return new ResponseEntity<List<PostDto>>(result, HttpStatus.OK);
 	}
 }
