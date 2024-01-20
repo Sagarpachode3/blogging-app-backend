@@ -1,0 +1,44 @@
+package com.codewithtechsagar.blog.services.impl;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.codewithtechsagar.blog.entities.Comment;
+import com.codewithtechsagar.blog.entities.Post;
+import com.codewithtechsagar.blog.exceptions.ResourceNotFoundException;
+import com.codewithtechsagar.blog.payloads.CommentDto;
+import com.codewithtechsagar.blog.repositories.CommentRepo;
+import com.codewithtechsagar.blog.repositories.PostRepo;
+import com.codewithtechsagar.blog.services.CommentService;
+
+public class CommentServiceImpl implements CommentService {
+	
+	@Autowired
+	private PostRepo postRepo;
+	
+	@Autowired
+	private CommentRepo commentRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public CommentDto createComment(CommentDto commentDto, Integer postId) {
+	Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "Post Id", postId));
+	
+	Comment comment = this.modelMapper.map(commentDto, Comment.class);
+	
+	comment.setPost(post);
+	
+	Comment savedComment = this.commentRepo.save(comment);
+	
+		return this.modelMapper.map(savedComment, CommentDto.class);
+	}
+
+	@Override
+	public void deleteComment(Integer commentId) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
