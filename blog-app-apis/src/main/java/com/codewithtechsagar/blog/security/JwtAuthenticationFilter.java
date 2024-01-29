@@ -5,10 +5,16 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
 
 	@Autowired
-	private UserDetailsService  userDetailsService;
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtTokenHelper jwtTokenHelper;
@@ -39,7 +45,56 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		String username = null;
 
 		String token = null;
+		
+		if(requestToken != null && requestToken.startsWith("Bearer")) {
+			
+			token = requestToken.substring(7);
+			
+			try {
+				
+				username = this.jwtTokenHelper.getUsernameFromToken(token);
+				
+			} catch (IllegalArgumentException e) {
+				
+				System.out.println("Unable to get Jwt token.");
+				
+			}catch (ExpiredJwtException e) {
+				
+				System.out.println("Jwt token has Expired.");
+				
+			}catch (MalformedJwtException e) {
+				
+				System.out.println("Invalid Jwt Exception.");
+			}
+			
+		}else {
+			System.out.println("Jwt token does not begin with Bearer.");
+		}
+		
+		//once we get the token, now we will validate
+		
+		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+			
+			if(this.jwtTokenHelper.validateToken(token, userDetails)) {
+				
+				//All is well
+				//Authentication
+				
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}else {
+				System.out.println("Invalid jwt token");
+			}
+		}else {
+			System.out.println("username is null or context is not null ");
+		}
 
+		filterChain.doFilter(request, response);
+		
 	}
 
 }
