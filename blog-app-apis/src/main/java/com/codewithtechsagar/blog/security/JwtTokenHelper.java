@@ -56,7 +56,7 @@ public class JwtTokenHelper {
 	
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<String, Object>();
-		return deGenerateToken(claims, userDetails.getUsername());
+		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
 	
@@ -66,7 +66,7 @@ public class JwtTokenHelper {
 	//3. According to JWS Compact Serialization  (https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 	// Compaction of the JWT to be a URL - Safe String
 	
-	private String deGenerateToken(Map<String, Object> claims, String subject) {
+	private String doGenerateToken(Map<String, Object> claims, String subject) {
 		
 		return Jwts.builder().setClaims(claims)
 				.setSubject(subject)
