@@ -1,0 +1,5 @@
+package com.codewithtechsagar.blog.config;
+
+public class SwaggerConfig {
+
+}

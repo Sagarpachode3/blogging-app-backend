@@ -1,7 +1,0 @@
-package com.codewithtechsagar.blog.config;
-
-import org.springframework.security.config.annotation.web.configuration.*;
-
-public class SecurityConfig extends Websecur{
-
-}

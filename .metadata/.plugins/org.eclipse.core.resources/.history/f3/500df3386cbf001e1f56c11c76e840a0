@@ -1,0 +1,13 @@
+@RestController
+public class HomeController {
+
+    Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+    @RequestMapping("/test")
+    public String test() {
+        this.logger.warn("This is working message");
+        return "Testing message";
+    }
+
+
+}

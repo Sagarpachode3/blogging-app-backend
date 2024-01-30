@@ -1,15 +1,20 @@
 package com.codewithtechsagar.blog.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.codewithtechsagar.blog.config.AppConstants;
+import com.codewithtechsagar.blog.entities.Role;
 import com.codewithtechsagar.blog.entities.User;
 import com.codewithtechsagar.blog.exceptions.ResourceNotFoundException;
 import com.codewithtechsagar.blog.payloads.UserDto;
+import com.codewithtechsagar.blog.repositories.RoleRepo;
 import com.codewithtechsagar.blog.repositories.UserRepo;
 import com.codewithtechsagar.blog.services.UserService;
 
@@ -22,6 +27,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepo roleRepo;
+	
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		User user = this.dtoToUser(userDto);
@@ -97,6 +108,23 @@ public class UserServiceImpl implements UserService {
 //		userDto.setPassword(user.getPassword());
 
 		return userDto;
+	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+		User user = this.modelMapper.map(userDto, User.class);
+		
+		//encoded the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		
+		//roles
+		  Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+		
+		  user.getRoles().add(role);
+		  
+		  User newUser = this.userRepo.save(user);
+		
+		return this.modelMapper.map(newUser, UserDto.class);
 	}
 
 }
