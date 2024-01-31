@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codewithtechsagar.blog.exceptions.ApiException;
 import com.codewithtechsagar.blog.payloads.JwtRequest;
 import com.codewithtechsagar.blog.payloads.JwtResponse;
 import com.codewithtechsagar.blog.payloads.UserDto;
 import com.codewithtechsagar.blog.security.JwtTokenHelper;
 import com.codewithtechsagar.blog.services.UserService;
-
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtParserBuilder;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,7 +41,7 @@ public class AuthController {
 	private UserService userService;
 
 	@PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) throws Exception {
 
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
@@ -57,7 +54,7 @@ public class AuthController {
         return new ResponseEntity<JwtResponse>(response, HttpStatus.OK);
     }
 
-	private void doAuthenticate(String email, String password) {
+	private void doAuthenticate(String email, String password) throws Exception {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
         try {
@@ -65,7 +62,7 @@ public class AuthController {
 
 
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new ApiException(" Invalid Username or Password  !!");
         }
 
     }

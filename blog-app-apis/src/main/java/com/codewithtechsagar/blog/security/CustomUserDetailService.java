@@ -21,7 +21,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
 		// loading user from database by userName
 		User user = this.userRepo.findByEmail(username)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "Email" + username, 0));
+				.orElseThrow(() -> new ResourceNotFoundException("User ", "Email " + username, 0));
 
 		return user;
 	}

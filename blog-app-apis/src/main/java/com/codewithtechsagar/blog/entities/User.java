@@ -53,13 +53,13 @@ public class User implements UserDetails {
 	private List<Post> posts = new ArrayList<Post>();
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleId"))
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))
 	private Set<Role> roles = new HashSet<Role>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authorities = this.roles.stream()
-				.map((role) -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
+				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 
 		return authorities;
 	}

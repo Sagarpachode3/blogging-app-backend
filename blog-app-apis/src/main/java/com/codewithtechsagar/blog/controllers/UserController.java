@@ -51,7 +51,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer uid){
-		
+		this.userService.getUserById(uid);
 		this.userService.deleteUser(uid);
 		//return new ResponseEntity(Map.of("message", "User deleted Successfully"), HttpStatus.OK);
 		return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted Successfully", true), HttpStatus.OK);
