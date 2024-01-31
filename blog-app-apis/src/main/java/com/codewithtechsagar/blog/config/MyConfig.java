@@ -1,4 +1,4 @@
-package com.codewithtechsagar.blog.config;
+/*package com.codewithtechsagar.blog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,4 +31,4 @@ class MyConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
         return builder.getAuthenticationManager();
     }
-}
+}*/
