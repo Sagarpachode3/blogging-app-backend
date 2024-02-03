@@ -39,14 +39,16 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "user_name", nullable = false)
+	@Column(name = "user_name", nullable = false,length = 100)
 	private String name;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 
+	@Column(nullable = false)
 	private String password;
 
+	@Column(nullable = false)
 	private String about;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
