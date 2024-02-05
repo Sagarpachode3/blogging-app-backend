@@ -34,16 +34,15 @@ public class UserController {
 	// POST - Create User
 
 	@PostMapping("/")
-	public ResponseEntity<Object> createUser(@Valid @RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 
 		try {
 			UserDto createUserDto = this.userService.createUser(userDto);
 			return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
 		} catch (DataIntegrityViolationException e) {
 
-			String errorMessage = "Email address '" + userDto.getEmail() + "' is already in use.";
-	        ApiResponse apiError = new ApiResponse(errorMessage, false);
-	        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+			String errorMessage = "Email address is already in use.";
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
 
 	}

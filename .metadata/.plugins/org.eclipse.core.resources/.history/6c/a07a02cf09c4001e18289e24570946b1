@@ -42,7 +42,7 @@ public class UserController {
 		} catch (DataIntegrityViolationException e) {
 
 			String errorMessage = "Email address '" + userDto.getEmail() + "' is already in use.";
-	        ApiResponse apiError = new ApiResponse(errorMessage, false);
+	        ApiResponse apiError = new ApiResponse(errorMessage, true);
 	        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
 		}
 

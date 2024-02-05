@@ -11,7 +11,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +23,6 @@ import com.codewithtechsagar.blog.payloads.JwtResponse;
 import com.codewithtechsagar.blog.payloads.UserDto;
 import com.codewithtechsagar.blog.security.JwtTokenHelper;
 import com.codewithtechsagar.blog.services.UserService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -75,23 +72,18 @@ public class AuthController {
 	//register new use API
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> registerNewUser(@RequestBody @Valid UserDto userDto) {
-	   /* if (bindingResult.hasErrors()) {
-	        // Log or print validation errors
-	        System.out.println("Validation errors: " + bindingResult.getAllErrors());
-	        // Return a meaningful response for validation errors
-	        ApiResponse apiError = new ApiResponse("Validation error", false);
-	        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
-	    }*/
+	public ResponseEntity<Object> registerNewUser(@RequestBody UserDto userDto){
+		
+		try {
+			
+			UserDto registeredUser = this.userService.registerNewUser(userDto);
+			return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+			
+		}catch (DataIntegrityViolationException e) {
 
-	    try {
-	        UserDto registeredUser = this.userService.registerNewUser(userDto);
-	        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
-	    } catch (DataIntegrityViolationException e) {
-	        String errorMessage = "Email address '" + userDto.getEmail() + "' is already in use.";
+			String errorMessage = "Email address '" + userDto.getEmail() + "' is already in use.";
 	        ApiResponse apiError = new ApiResponse(errorMessage, false);
 	        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
-	    }
+		}
 	}
-
 }

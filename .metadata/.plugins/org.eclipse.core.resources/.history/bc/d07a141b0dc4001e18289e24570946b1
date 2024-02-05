@@ -75,14 +75,14 @@ public class AuthController {
 	//register new use API
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> registerNewUser(@RequestBody @Valid UserDto userDto) {
-	   /* if (bindingResult.hasErrors()) {
+	public ResponseEntity<Object> registerNewUser(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
+	    if (bindingResult.hasErrors()) {
 	        // Log or print validation errors
 	        System.out.println("Validation errors: " + bindingResult.getAllErrors());
 	        // Return a meaningful response for validation errors
 	        ApiResponse apiError = new ApiResponse("Validation error", false);
 	        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
-	    }*/
+	    }
 
 	    try {
 	        UserDto registeredUser = this.userService.registerNewUser(userDto);
