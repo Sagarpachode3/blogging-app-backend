@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.codewithtechsagar.blog.entities.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -26,20 +27,25 @@ public class UserDto {
 	@Size(min = 4, message = "User Name must be minimum of 4 characters !!!")
 	private String name;
 
-	@NotEmpty
+	@NotEmpty(message = "Email address is required")
 	@Email(message = "Email address is not valid !!!")
 	private String email;
 
 	//@NotNull
 	
 	//@Size(min = 8, max = 14, message = "Password lenghth : 8 -14 & Password Must contain - 2 letters in Upper Case)
-	@NotEmpty	
+	//@NotEmpty()	
 	@Pattern(regexp = "^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,14}$", message = "Password lenghth : 8 -14 & Password Must contain - 2 letters in Upper Case, 1  Special Character (!@#$&*), 2 numerals (0-9), 3 letters in Lower Case\"")
 	private String password;
 
 	//@NotNull
-	@NotEmpty
+	@NotEmpty(message = "About is required")
 	private String about;
 	
 	private Set<RoleDto> roles = new HashSet<RoleDto>();
+	
+	@JsonIgnore
+	public String getPassword() {
+		return this.password;
+	}
 }

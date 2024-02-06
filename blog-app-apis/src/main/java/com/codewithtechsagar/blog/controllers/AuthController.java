@@ -1,5 +1,6 @@
 package com.codewithtechsagar.blog.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codewithtechsagar.blog.entities.User;
 import com.codewithtechsagar.blog.exceptions.ApiException;
 import com.codewithtechsagar.blog.payloads.ApiResponse;
 import com.codewithtechsagar.blog.payloads.JwtRequest;
@@ -31,6 +33,9 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 
+	@Autowired
+	private ModelMapper mapper;
+	
 	@Autowired
 	private JwtTokenHelper jwtTokenHelper;
 
@@ -48,29 +53,34 @@ public class AuthController {
 	@PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) throws Exception {
 
-        this.doAuthenticate(request.getEmail(), request.getPassword());
+        this.authenticate(request.getUsername(), request.getPassword());
 
 
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getEmail());
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.jwtTokenHelper.generateToken(userDetails);
+        
 
         JwtResponse response = new JwtResponse();
         response.setToken(token);
+        response.setUser(this.mapper.map((User) userDetails, UserDto.class));
         return new ResponseEntity<JwtResponse>(response, HttpStatus.OK);
     }
 
-	private void doAuthenticate(String email, String password) throws Exception {
+	private void authenticate(String username, String password) throws Exception {
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-        try {
-        	this.authenticationManager.authenticate(authentication);
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+				password);
 
+		try {
 
-        } catch (BadCredentialsException e) {
-            throw new ApiException(" Invalid Username or Password  !!");
-        }
+			this.authenticationManager.authenticate(authenticationToken);
 
-    }
+		} catch (BadCredentialsException e) {
+			System.out.println("Invalid Detials !!");
+			throw new ApiException("Invalid username or password !!");
+		}
+
+	}
 	
 	//register new use API
 	
