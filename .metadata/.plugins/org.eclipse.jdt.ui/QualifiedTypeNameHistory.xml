@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.security.core.userdetails.User"/>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
     <fullyQualifiedTypeName name="com.codewithtechsagar.blog.controllers.AuthController"/>
     <fullyQualifiedTypeName name="com.codewithtechsagar.blog.payloads.JwtAuthRequest"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="com.codewithtechsagar.blog.entities.User"/>
     <fullyQualifiedTypeName name="com.codewithtechsagar.blog.payloads.UserDto"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonProperty"/>
 </qualifiedTypeNameHistroy>

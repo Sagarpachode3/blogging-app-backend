@@ -31,7 +31,7 @@ import com.codewithtechsagar.blog.services.PostService;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/")
 public class PostController {
 
 	@Autowired
